@@ -1,0 +1,40 @@
+@startuml
+
+title Diagrama de Classes - Padrão Facade (Hospital)
+
+class Paciente {
+    +receberAlta(): boolean
+}
+
+class PacienteFacade {
+    +verificarPendenciasAlta(paciente: Paciente): boolean
+}
+
+abstract class SetorHospital {
+    -pacientesComPendencia: List<Paciente>
+    +addPacientePendente(paciente: Paciente): void
+    +verificarPacienteComPendencia(paciente: Paciente): boolean
+}
+
+class FinanceiroHospital {
+    {static} getInstancia(): FinanceiroHospital
+}
+
+class Laboratorio {
+    {static} getInstancia(): Laboratorio
+}
+
+class Farmacia {
+    {static} getInstancia(): Farmacia
+}
+
+SetorHospital <|-- FinanceiroHospital
+SetorHospital <|-- Laboratorio
+SetorHospital <|-- Farmacia
+
+Paciente --> PacienteFacade : usa
+PacienteFacade --> FinanceiroHospital
+PacienteFacade --> Laboratorio
+PacienteFacade --> Farmacia
+
+@enduml
